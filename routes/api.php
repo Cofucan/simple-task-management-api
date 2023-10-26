@@ -17,3 +17,20 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// api/v1
+Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function () {
+    // api/v1/tasks
+    Route::group(['prefix' => 'tasks'], function () {
+        // api/v1/tasks
+        Route::get('/', 'TaskController@index');
+        // api/v1/tasks/{task}
+        Route::get('/{task}', 'TaskController@show');
+        // api/v1/tasks
+        Route::post('/', 'TaskController@store');
+        // api/v1/tasks/{task}
+        Route::put('/{task}', 'TaskController@update');
+        // api/v1/tasks/{task}
+        Route::delete('/{task}', 'TaskController@destroy');
+    });
+});

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Http\Controllers\Controller;
 use App\Models\Task;
 
 class TaskController extends Controller
@@ -13,7 +14,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        return Task::all();
     }
 
     /**
@@ -33,11 +34,16 @@ class TaskController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the task with the specified id
      */
     public function show(Task $task)
     {
-        //
+
+        // The $task parameter is already an instance of Task, no need to find it again
+        // If the task was not found, Laravel will automatically return a 404 response
+
+        // Return the task
+        return $task;
     }
 
     /**
