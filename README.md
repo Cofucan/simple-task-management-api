@@ -64,3 +64,11 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Linux Dependencies
+
+- sudo apt install curl php-cli php-mbstring unzip
+- sudo apt install php-xml
+- sudo apt install php-sqlite3
+- sudo apt install php-mysql
+- sudo apt install php-pgsql
