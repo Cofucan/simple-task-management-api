@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\TaskController;
+use App\Http\Controllers\Api\V1\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,19 +24,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // api/v1
 Route::group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers\Api\V1'], function () {
 
-    Route::apiResource('tasks', TaskController::class);
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::apiResource('tasks', TaskController::class);
+    });
 
-    // // api/v1/tasks
-    // Route::group(['prefix' => 'tasks'], function () {
-    //     // api/v1/tasks
-    //     Route::get('/', 'TaskController@index');
-    //     // api/v1/tasks/{task}
-    //     Route::get('/{task}', 'TaskController@show');
-    //     // api/v1/tasks
-    //     Route::post('/', 'TaskController@store');
-    //     // api/v1/tasks/{task}
-    //     Route::put('/{task}', 'TaskController@update');
-    //     // api/v1/tasks/{task}
-    //     Route::delete('/{task}', 'TaskController@destroy');
-    // });
+    Route::post('/auth/register', [AuthController::class, 'createUser']);
+    Route::post('/auth/login', [AuthController::class, 'loginUser']);
 });

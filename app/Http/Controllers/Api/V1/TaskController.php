@@ -31,7 +31,27 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        //
+        try {
+            // Get the authenticated user
+            $user = auth()->user();
+
+            // Create and store a new task for the user
+            $task = $user->tasks()->create([
+                'title' => $request->input('title'),
+                'description' => $request->input('description'),
+                'status' => $request->input('status'),
+            ]);
+
+            // Return the created task as a resource
+            return TaskResource::make($task)->response()->setStatusCode(201);
+
+        } catch (\Throwable $th) {
+            // Handle any exceptions
+            return response()->json([
+                'status' => false,
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
 
     /**
