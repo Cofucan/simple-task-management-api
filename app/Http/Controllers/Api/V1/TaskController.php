@@ -35,6 +35,30 @@ class TaskController extends Controller
             // Get the authenticated user
             $user = auth()->user();
 
+            // Title should not be empty and not be more than 255 characters
+            if (empty($request->input('title')) || strlen($request->input('title')) > 255) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Title should not be empty and not be more than 255 characters',
+                ], 400);
+            }
+
+            // Description should not be more than 1000 characters
+            if (strlen($request->input('description')) > 1000) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Description should not be more than 1000 characters',
+                ], 400);
+            }
+
+            // Status should not be empty and should be one of the following: pending, in_progress or completed
+            if (empty($request->input('status')) || !in_array($request->input('status'), ['pending', 'in_progress', 'completed'])) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Status should not be empty and should be one of the following: pending, in_progress or completed',
+                ], 400);
+            }
+
             // Create and store a new task for the user
             $task = $user->tasks()->create([
                 'title' => $request->input('title'),
